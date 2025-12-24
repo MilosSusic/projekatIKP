@@ -2,7 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-#/.vs
+/.vs
 #/Domain/obj
 #/Domain/bin/Debug/net8.0
 #/Services/bin/Debug/net8.0
@@ -12,7 +12,7 @@
 
 # Ignore .vs folder inside MeteoroloskiServis
 #/projekat/MeteoroloskiServis/.vs
-
+/projekatIKP/.vs
 # Build output
 *.exe
 *.dll
@@ -50,7 +50,6 @@ x86/
 .vs/
 .suo 
 
-.gitignore 
 
 x64/
 x86/
