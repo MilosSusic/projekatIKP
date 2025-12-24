@@ -12,7 +12,7 @@
 
 # Ignore .vs folder inside MeteoroloskiServis
 #/projekat/MeteoroloskiServis/.vs
-/projekatIKP/.vs
+projekatIKP/projekatIKP/.vs
 # Build output
 *.exe
 *.dll
