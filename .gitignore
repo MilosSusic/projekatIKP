@@ -2,13 +2,52 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
-/Domain/obj
-/Domain/bin/Debug/net8.0
-/Services/bin/Debug/net8.0
-/Services/obj
-/Application/bin/Debug/net8.0
-/Application/obj
+#/.vs
+#/Domain/obj
+#/Domain/bin/Debug/net8.0
+#/Services/bin/Debug/net8.0
+#/Services/obj
+#/Application/bin/Debug/net8.0
+#/Application/obj
 
 # Ignore .vs folder inside MeteoroloskiServis
-/projekat/MeteoroloskiServis/.vs
+#/projekat/MeteoroloskiServis/.vs
+
+# Build output
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.idb
+*.ilk
+*.pch
+
+# Debug/Release folders
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Oo]bj/
+[Bb]in/
+
+# Visual Studio user-specific files
+*.user
+*.suo
+*.vcxproj.user
+*.vspscc
+*.vssscc
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Visual Studio cache
+.vs/
+.suo 
+
+.gitignore

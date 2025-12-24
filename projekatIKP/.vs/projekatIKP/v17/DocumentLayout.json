@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\",
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|solutionrelative:server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|solutionrelative:client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -18,37 +18,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eb70ef4f-9898-4e9d-91c3-419ef679d727}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "client.cpp",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\client\\client.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp",
               "RelativeDocumentMoniker": "client\\client.cpp",
-              "ToolTip": "C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\client\\client.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp",
               "RelativeToolTip": "client\\client.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADQAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-24T11:04:14.489Z",
               "EditorCaption": ""
@@ -57,50 +37,14 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "server.cpp",
-              "DocumentMoniker": "C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\server\\server.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp",
               "RelativeDocumentMoniker": "server\\server.cpp",
-              "ToolTip": "C:\\Users\\User\\Desktop\\PROJEKAT IKP\\projekatIKP\\server\\server.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp",
               "RelativeToolTip": "server\\server.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAPUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-24T11:02:50.291Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 398,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 1281,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{519e8a32-1c95-4a42-956f-2cee2f28eb0f}"
             }
           ]
         }
