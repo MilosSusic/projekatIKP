@@ -64,3 +64,9 @@ server\x64\Debug
 .vs\
 
 projekatIKP\.vs\projekatIKP\v17\
+# Ignoriši ceo VS cache folder
+.vs/
+
+# Ignoriši IntelliSense baze
+*.VC.db
+*.opendb
