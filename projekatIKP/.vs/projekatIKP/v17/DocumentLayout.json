@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|solutionrelative:server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|solutionrelative:client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|solutionrelative:server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +18,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "client.cpp",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp",
               "RelativeDocumentMoniker": "client\\client.cpp",
               "ToolTip": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\client\\client.cpp",
               "RelativeToolTip": "client\\client.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAHgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-24T11:04:14.489Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "server.cpp",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp",
               "RelativeDocumentMoniker": "server\\server.cpp",
               "ToolTip": "C:\\Users\\User\\Desktop\\New folder\\projekatIKP\\server\\server.cpp",
               "RelativeToolTip": "server\\server.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAANQAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAN8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-24T11:02:50.291Z",
               "EditorCaption": ""

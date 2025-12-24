@@ -1,9 +1,7 @@
 
-
-
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 #include <thread>
 #include <mutex>
 #include <winsock2.h>
@@ -30,13 +28,20 @@ struct CircularBuffer {
     bool isEmpty() const { return head == tail; }
     bool isFull() const { return (head + 1) % BUF_SIZE == tail; }
 
-    void push(const char* src, int len) {
+    int available() const {
+        if (head >= tail) return head - tail;
+        return BUF_SIZE - tail + head;
+    }
+
+    int push(const char* src, int len) {
+        int pushed = 0;
         for (int i = 0; i < len; i++) {
-            if (!isFull()) {
-                data[head] = src[i];
-                head = (head + 1) % BUF_SIZE;
-            }
+            if (isFull()) break;
+            data[head] = src[i];
+            head = (head + 1) % BUF_SIZE;
+            pushed++;
         }
+        return pushed;
     }
 
     bool pop(char* dst, int len) {
@@ -48,21 +53,26 @@ struct CircularBuffer {
         return true;
     }
 
-    int available() const {
-        if (head >= tail) return head - tail;
-        return BUF_SIZE - tail + head;
+    bool peek(char* dst, int len) const {
+        if (available() < len) return false;
+        int t = tail;
+        for (int i = 0; i < len; i++) {
+            dst[i] = data[t];
+            t = (t + 1) % BUF_SIZE;
+        }
+        return true;
     }
 };
 
 struct Client {
-    int id;
+    int id = -1;
     SOCKET sock;
     std::string username;
     int connected_to = -1;
     CircularBuffer buffer;
 };
 
-std::vector<Client> clients;
+std::list<Client> clients;
 std::mutex clients_mutex;
 int next_id = 1;
 
@@ -160,16 +170,17 @@ void client_handler(Client& client) {
         // Parsiranje poruka iz bafera
         while (client.buffer.available() >= sizeof(MessageHeader)) {
             MessageHeader hdr;
-            if (!client.buffer.pop((char*)&hdr, sizeof(hdr))) break;
+            char hdrbuf[sizeof(MessageHeader)];
+            if (!client.buffer.peek(hdrbuf, sizeof(hdr))) break;
+            memcpy(&hdr, hdrbuf, sizeof(hdr));
 
-            if (client.buffer.available() < hdr.payload_len) {
-                // ako payload još nije stigao, vrati header nazad (jednostavna varijanta)
-                client.buffer.tail = (client.buffer.tail - sizeof(hdr) + BUF_SIZE) % BUF_SIZE;
-                break;
-            }
+            if (client.buffer.available() < sizeof(hdr) + hdr.payload_len) break;
 
-            std::string payload;
-            payload.resize(hdr.payload_len);
+            // sada sigurno imamo celu poruku
+            client.buffer.pop(hdrbuf, sizeof(hdr));
+            memcpy(&hdr, hdrbuf, sizeof(hdr));
+
+            std::string payload(hdr.payload_len, '\0');
             client.buffer.pop(&payload[0], hdr.payload_len);
 
             handle_request(client, hdr, payload);
@@ -201,12 +212,15 @@ int main() {
         {
             std::lock_guard<std::mutex> lock(clients_mutex);
             clients.push_back(c);
+            Client& ref = clients.back();
+            std::thread(client_handler, std::ref(ref)).detach();
         }
-
-        std::thread(client_handler, std::ref(clients.back())).detach();
     }
 
     closesocket(server_fd);
     WSACleanup();
     return 0;
 }
+
+
+
