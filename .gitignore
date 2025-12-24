@@ -50,4 +50,11 @@ x86/
 .vs/
 .suo 
 
-.gitignore
+.gitignore 
+
+x64/
+x86/
+Debug/
+Release/
+bin/
+obj/
