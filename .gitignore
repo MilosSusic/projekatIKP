@@ -57,3 +57,6 @@ Debug/
 Release/
 bin/
 obj/
+
+
+server\x64\Debug
