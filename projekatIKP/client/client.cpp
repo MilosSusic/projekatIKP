@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <thread>
@@ -12,15 +13,15 @@
 #pragma pack(push, 1)
 struct MessageHeader {
     int client_id;
-    int request_type;   // REGISTER=1, LIST=2, CONNECT=3, MESSAGE=4, DISCONNECT=5
+    int request_type;   // REGISTER=1, LIST=2, CONNECT_REQUEST=3, MESSAGE=4, DISCONNECT=5
+    // INCOMING_CALL=6, CALL_ACCEPTED=7, CALL_REJECTED=8
     int payload_len;
 };
 #pragma pack(pop)
 
 SOCKET sock;
-int my_id = 0; // inicijalno 0, server dodjeljuje pravi ID
+int my_id = 0;
 
-// funkcija za ispis menija
 void print_menu() {
     std::cout << "\n=== Meni ===\n";
     std::cout << "1. Register\n";
@@ -31,7 +32,12 @@ void print_menu() {
     std::cout << "Izbor: ";
 }
 
-// nit za prijem poruka od servera
+void send_request(int type, const std::string& payload) {
+    MessageHeader hdr{ my_id, type, (int)payload.size() };
+    send(sock, (char*)&hdr, sizeof(hdr), 0);
+    if (hdr.payload_len > 0) send(sock, payload.c_str(), hdr.payload_len, 0);
+}
+
 void recv_thread() {
     while (true) {
         MessageHeader hdr;
@@ -47,26 +53,34 @@ void recv_thread() {
             recv(sock, &payload[0], hdr.payload_len, 0);
         }
 
-        std::cout << "\n[SERVER odgovor] client_id=" << hdr.client_id
-            << " type=" << hdr.request_type
-            << " payload=" << (payload.empty() ? "(nema)" : payload)
-            << std::endl;
+        if (hdr.request_type == 6) { // INCOMING_CALL
+            std::cout << "\nPoziv od klijenta: " << payload << "\nPrihvati? (y/n): ";
+            char choice;
+            std::cin >> choice;
+            std::cin.ignore();
+            if (choice == 'y') {
+                send_request(7, ""); // CALL_ACCEPTED
+            }
+            else {
+                send_request(8, ""); // CALL_REJECTED
+            }
+        }
+        else {
+            std::cout << "\n[SERVER odgovor] client_id=" << hdr.client_id
+                << " type=" << hdr.request_type
+                << " payload=" << (payload.empty() ? "(nema)" : payload)
+                << std::endl;
+        }
 
         print_menu();
     }
-}
-
-void send_request(int type, const std::string& payload) {
-    MessageHeader hdr{ my_id, type, (int)payload.size() };
-    send(sock, (char*)&hdr, sizeof(hdr), 0);
-    if (hdr.payload_len > 0) send(sock, payload.c_str(), hdr.payload_len, 0);
 }
 
 void menu() {
     int choice;
     std::string input;
 
-    print_menu(); // prikaži meni na po?etku
+    print_menu();
 
     while (true) {
         std::cin >> choice;
@@ -76,7 +90,6 @@ void menu() {
         case 1: // REGISTER
             std::cout << "Unesi username: ";
             std::getline(std::cin, input);
-            // šaljemo REGISTER sa client_id=0, server dodjeljuje pravi ID
             send_request(1, input);
             break;
         case 2: // LIST

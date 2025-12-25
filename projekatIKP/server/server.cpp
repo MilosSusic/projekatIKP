@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <list>
@@ -15,7 +14,8 @@
 #pragma pack(push, 1)
 struct MessageHeader {
     int client_id;
-    int request_type;   // REGISTER=1, LIST=2, CONNECT=3, MESSAGE=4, DISCONNECT=5
+    int request_type;   // REGISTER=1, LIST=2, CONNECT_REQUEST=3, MESSAGE=4, DISCONNECT=5
+    // INCOMING_CALL=6, CALL_ACCEPTED=7, CALL_REJECTED=8
     int payload_len;
 };
 #pragma pack(pop)
@@ -69,6 +69,7 @@ struct Client {
     SOCKET sock;
     std::string username;
     int connected_to = -1;
+    int pending_requester = -1;
     CircularBuffer buffer;
 };
 
@@ -124,16 +125,31 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         send_message(client.sock, client.id, 2, list);
         break;
     }
-    case 3: { // CONNECT
+    case 3: { // CONNECT_REQUEST
         Client* target = find_client_by_username(payload);
         if (target) {
-            client.connected_to = target->id;
-            target->connected_to = client.id;
-            send_message(client.sock, client.id, 3, "CONNECTED to " + target->username);
-            send_message(target->sock, target->id, 3, "CONNECTED to " + client.username);
+            send_message(target->sock, target->id, 6, "INCOMING_CALL from " + client.username);
+            target->pending_requester = client.id;
         }
         else {
             send_message(client.sock, client.id, 3, "CONNECT_FAILED");
+        }
+        break;
+    }
+    case 7: { // CALL_ACCEPTED
+        Client* requester = find_client_by_id(client.pending_requester);
+        if (requester) {
+            requester->connected_to = client.id;
+            client.connected_to = requester->id;
+            send_message(requester->sock, requester->id, 3, "CONNECTED to " + client.username);
+            send_message(client.sock, client.id, 3, "CONNECTED to " + requester->username);
+        }
+        break;
+    }
+    case 8: { // CALL_REJECTED
+        Client* requester = find_client_by_id(client.pending_requester);
+        if (requester) {
+            send_message(requester->sock, requester->id, 3, "CONNECT_REJECTED");
         }
         break;
     }
@@ -147,9 +163,8 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         break;
     }
     case 5: { // DISCONNECT
-        shutdown(client.sock, SD_BOTH);
-        closesocket(client.sock);
-        remove_client(client.sock);
+        client.connected_to = -1;
+        send_message(client.sock, client.id, 5, "DISCONNECTED");
         break;
     }
     default:
@@ -167,7 +182,6 @@ void client_handler(Client& client) {
         }
         client.buffer.push(recvbuf, n);
 
-        // Parsiranje poruka iz bafera
         while (client.buffer.available() >= sizeof(MessageHeader)) {
             MessageHeader hdr;
             char hdrbuf[sizeof(MessageHeader)];
@@ -176,7 +190,6 @@ void client_handler(Client& client) {
 
             if (client.buffer.available() < sizeof(hdr) + hdr.payload_len) break;
 
-            // sada sigurno imamo celu poruku
             client.buffer.pop(hdrbuf, sizeof(hdr));
             memcpy(&hdr, hdrbuf, sizeof(hdr));
 
@@ -221,6 +234,8 @@ int main() {
     WSACleanup();
     return 0;
 }
+
+
 
 
 
