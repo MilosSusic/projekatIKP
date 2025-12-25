@@ -101,6 +101,17 @@ void remove_client(SOCKET sock) {
     for (auto it = clients.begin(); it != clients.end(); ++it) {
         if (it->sock == sock) {
             std::cout << "Klijent " << it->username << " se diskonektovao.\n";
+
+            // Ako je bio povezan sa nekim, obavesti tog klijenta
+            if (it->connected_to != -1) {
+                Client* other = find_client_by_id(it->connected_to);
+                if (other) {
+                    other->connected_to = -1;
+                    send_message(other->sock, other->id, 5,
+                        "Prekinuta je komunikacija sa klijentom " + it->username);
+                }
+            }
+
             clients.erase(it);
             break;
         }
@@ -163,6 +174,14 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         break;
     }
     case 5: { // DISCONNECT
+        if (client.connected_to != -1) {
+            Client* other = find_client_by_id(client.connected_to);
+            if (other) {
+                other->connected_to = -1;
+                send_message(other->sock, other->id, 5,
+                    "Prekinuta je komunikacija sa klijentom " + client.username);
+            }
+        }
         client.connected_to = -1;
         send_message(client.sock, client.id, 5, "DISCONNECTED");
         break;
@@ -234,8 +253,3 @@ int main() {
     WSACleanup();
     return 0;
 }
-
-
-
-
-
