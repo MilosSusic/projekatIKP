@@ -29,6 +29,8 @@ void print_menu() {
     std::cout << "3. Connect to client\n";
     std::cout << "4. Send message\n";
     std::cout << "5. Disconnect\n";
+    std::cout << "6. Accept call\n";
+    std::cout << "7. Reject call\n";
     std::cout << "Izbor: ";
 }
 
@@ -54,16 +56,9 @@ void recv_thread() {
         }
 
         if (hdr.request_type == 6) { // INCOMING_CALL
-            std::cout << "\nPoziv od klijenta: " << payload << "\nPrihvati? (y/n): ";
-            char choice;
-            std::cin >> choice;
-            std::cin.ignore();
-            if (choice == 'y') {
-                send_request(7, ""); // CALL_ACCEPTED
-            }
-            else {
-                send_request(8, ""); // CALL_REJECTED
-            }
+            std::cout << "\nPoziv od klijenta: " << payload
+                << "\nZa prihvatanje izaberi opciju 6, za odbijanje opciju 7 u meniju."
+                << std::endl;
         }
         else {
             std::cout << "\n[SERVER odgovor] client_id=" << hdr.client_id
@@ -108,6 +103,12 @@ void menu() {
         case 5: // DISCONNECT
             send_request(5, "");
             return;
+        case 6: // ACCEPT CALL
+            send_request(7, ""); // CALL_ACCEPTED
+            break;
+        case 7: // REJECT CALL
+            send_request(8, ""); // CALL_REJECTED
+            break;
         default:
             std::cout << "Nepoznata opcija." << std::endl;
         }
