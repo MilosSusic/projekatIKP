@@ -51,13 +51,14 @@ void flood_client(int client_id, int message_count) {
     // Flood poruke
     for (int i = 0; i < message_count; i++) {
         std::string msg = "Message " + std::to_string(i) + " from client " + std::to_string(client_id);
-        MessageHeader hdr{ client_id, 4, (int)msg.size() };
+        MessageHeader hdr{ 0, 4, (int)msg.size() };
 
         int n = send(sock, (char*)&hdr, sizeof(hdr), 0);
         n += send(sock, msg.c_str(), hdr.payload_len, 0);
 
         if (n > 0) sent_messages++;
         else failed_messages++;
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 
     closesocket(sock);

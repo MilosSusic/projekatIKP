@@ -9,6 +9,8 @@
 #include "NetConstants.h"
 #include "Message.h"
 #include "Protocol.h"
+#include <mutex>
+std::mutex clients_mutex;
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -102,6 +104,7 @@ struct ClientList {
     }
 
     Client* findByUsername(const char* name) {
+        std::lock_guard<std::mutex> lock(clients_mutex);
         Node* temp = head;
         while (temp) {
             if (strcmp(temp->data.username, name) == 0) return &temp->data;
@@ -118,6 +121,7 @@ int next_id = 1;
 void send_message(SOCKET sock, int client_id, int type, const std::string& payload);
 
 void ClientList::remove(SOCKET sock) {
+    std::lock_guard<std::mutex> lock(clients_mutex);
     Node* temp = head;
     Node* prev = nullptr;
     while (temp) {
@@ -133,6 +137,7 @@ void ClientList::remove(SOCKET sock) {
                         std::string("Prekinuta je komunikacija sa klijentom ") + temp->data.username);
                 }
             }
+            closesocket(temp->data.sock);
             // Ukloni ?vor iz liste
             if (prev) prev->next = temp->next;
             else head = temp->next;
@@ -153,6 +158,7 @@ void send_message(SOCKET sock, int client_id, int type, const std::string& paylo
 }
 
 void handle_request(Client& client, const MessageHeader& hdr, const std::string& payload) {
+    std::lock_guard<std::mutex> lock(clients_mutex);
     switch (hdr.request_type) {
     case 1: { // REGISTER
         client.id = next_id++;
