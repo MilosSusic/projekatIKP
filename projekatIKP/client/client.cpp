@@ -1,23 +1,17 @@
 
 #include <iostream>
+#include <limits>
 #include <string>
 #include <thread>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include "Protocol.h"
+#include "NetConstants.h"
+#include "Message.h"
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define PORT 8080
 #define SERVER_IP "127.0.0.1"
-
-#pragma pack(push, 1)
-struct MessageHeader {
-    int client_id;
-    int request_type;   // REGISTER=1, LIST=2, CONNECT_REQUEST=3, MESSAGE=4, DISCONNECT=5
-    // INCOMING_CALL=6, CALL_ACCEPTED=7, CALL_REJECTED=8
-    int payload_len;
-};
-#pragma pack(pop)
 
 SOCKET sock;
 int my_id = 0;
@@ -79,7 +73,16 @@ void menu() {
 
     while (true) {
         std::cin >> choice;
-        std::cin.ignore();
+
+        if (std::cin.fail()) {
+            std::cin.clear(); // reset fail state
+            std::cin.ignore();
+            std::cout << "Nepoznata opcija." << std::endl;
+            std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+            print_menu();
+            continue;
+        }
+        std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 
         switch (choice) {
         case 1: // REGISTER

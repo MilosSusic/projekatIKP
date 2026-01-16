@@ -1,4 +1,4 @@
-
+﻿
 #include <iostream>
 #include <thread>
 #include <winsock2.h>
@@ -6,20 +6,14 @@
 #include <cstring>
 #include <string>
 #include <sstream>
+#include "NetConstants.h"
+#include "Message.h"
+#include "Protocol.h"
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define PORT 8080
-#define BUF_SIZE 4096
 
 #pragma pack(push, 1)
-struct MessageHeader {
-    int client_id;
-    int request_type;   // REGISTER=1, LIST=2, CONNECT_REQUEST=3, MESSAGE=4, DISCONNECT=5
-    // INCOMING_CALL=6, CALL_ACCEPTED=7, CALL_REJECTED=8
-    int payload_len;
-};
-#pragma pack(pop)
 
 struct CircularBuffer {
     char data[BUF_SIZE];
@@ -179,13 +173,39 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
     }
     case 3: { // CONNECT_REQUEST
         Client* target = clients.findByUsername(payload.c_str());
-        if (target) {
-            send_message(target->sock, target->id, 6, std::string("INCOMING_CALL from ") + client.username);
-            target->pending_requester = client.id;
+
+        if (!target) {
+            send_message(client.sock, client.id, 3, "CONNECT_FAILED: USER_NOT_FOUND");
+            break;
         }
-        else {
-            send_message(client.sock, client.id, 3, "CONNECT_FAILED");
+
+        // 🔴 NE MOŽE SAM SEBE
+        if (target->id == client.id) {
+            send_message(client.sock, client.id, 3, "CONNECT_FAILED: CANNOT_CONNECT_TO_SELF");
+            break;
         }
+
+        // 🔴 AKO JE VEĆ POVEZAN
+        if (client.connected_to != -1) {
+            send_message(client.sock, client.id, 3, "CONNECT_FAILED: ALREADY_CONNECTED");
+            break;
+        }
+
+        // 🔴 AKO JE TARGET VEĆ POVEZAN
+        if (target->connected_to != -1) {
+            send_message(client.sock, client.id, 3, "CONNECT_FAILED: TARGET_BUSY");
+            break;
+        }
+
+        // ✅ SVE OK – POŠALJI POZIV
+        send_message(
+            target->sock,
+            target->id,
+            6,
+            std::string("INCOMING_CALL from ") + client.username
+        );
+
+        target->pending_requester = client.id;
         break;
     }
     case 7: { // CALL_ACCEPTED
