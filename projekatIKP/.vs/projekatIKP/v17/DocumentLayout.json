@@ -3,12 +3,80 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|solutionrelative:server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{5A52365A-CBBF-4D2B-8853-DF9885E8F11D}|StressClient\\StressClient.vcxproj|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\StressClient\\StressClient.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A52365A-CBBF-4D2B-8853-DF9885E8F11D}|StressClient\\StressClient.vcxproj|solutionrelative:StressClient\\StressClient.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{716588C5-1086-4002-8A66-73C479445824}|client\\client.vcxproj|solutionrelative:client\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE84B2EA-AC26-4920-A3E8-DA751C9A094C}|MessageFloodClient\\MessageFloodClient.vcxproj|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\MessageFloodClient\\MessageFloodClient.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{BE84B2EA-AC26-4920-A3E8-DA751C9A094C}|MessageFloodClient\\MessageFloodClient.vcxproj|solutionrelative:MessageFloodClient\\MessageFloodClient.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A3AB5F2D-C879-462B-AF4F-9E400FA306AC}|server\\server.vcxproj|solutionrelative:server\\server.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientListt.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\ClientListt.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\message.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\config.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\config.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\circular_buffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\circular_buffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\message.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\Clientt.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\Clientt.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\ClientList.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\ClientList.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\CircularBuffer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\CircularBuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\MessageHeader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\MessageHeader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +86,237 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eb70ef4f-9898-4e9d-91c3-419ef679d727}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StressClient.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\StressClient\\StressClient.cpp",
+              "RelativeDocumentMoniker": "StressClient\\StressClient.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\StressClient\\StressClient.cpp",
+              "RelativeToolTip": "StressClient\\StressClient.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-10T11:45:10.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MessageFloodClient.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\MessageFloodClient\\MessageFloodClient.cpp",
+              "RelativeDocumentMoniker": "MessageFloodClient\\MessageFloodClient.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\MessageFloodClient\\MessageFloodClient.cpp",
+              "RelativeToolTip": "MessageFloodClient\\MessageFloodClient.cpp",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAMwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-10T11:46:02.055Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ClientList.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.cpp",
+              "RelativeDocumentMoniker": "server\\ClientList.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.cpp",
+              "RelativeToolTip": "server\\ClientList.cpp",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAqwDwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T19:15:01.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClientListt.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientListt.cpp",
+              "RelativeDocumentMoniker": "server\\ClientListt.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientListt.cpp",
+              "RelativeToolTip": "server\\ClientListt.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T19:06:05.177Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ClientList.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.h",
+              "RelativeDocumentMoniker": "server\\ClientList.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\ClientList.h",
+              "RelativeToolTip": "server\\ClientList.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T19:04:08.171Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Clientt.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\Clientt.h",
+              "RelativeDocumentMoniker": "server\\Clientt.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\Clientt.h",
+              "RelativeToolTip": "server\\Clientt.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T19:03:31.369Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CircularBuffer.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.cpp",
+              "RelativeDocumentMoniker": "server\\CircularBuffer.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.cpp",
+              "RelativeToolTip": "server\\CircularBuffer.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T19:01:04.258Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CircularBuffer.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.h",
+              "RelativeDocumentMoniker": "server\\CircularBuffer.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\CircularBuffer.h",
+              "RelativeToolTip": "server\\CircularBuffer.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T19:00:18.215Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MessageHeader.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\MessageHeader.h",
+              "RelativeDocumentMoniker": "server\\MessageHeader.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\MessageHeader.h",
+              "RelativeToolTip": "server\\MessageHeader.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T18:59:39.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\main.cpp",
+              "RelativeDocumentMoniker": "server\\main.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\main.cpp",
+              "RelativeToolTip": "server\\main.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T18:07:14.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "message.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.cpp",
+              "RelativeDocumentMoniker": "server\\message.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.cpp",
+              "RelativeToolTip": "server\\message.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T18:05:15.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "client.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.cpp",
+              "RelativeDocumentMoniker": "server\\client.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.cpp",
+              "RelativeToolTip": "server\\client.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-25T18:05:05.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "server.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\Server.h",
+              "RelativeDocumentMoniker": "server\\Server.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\Server.h",
+              "RelativeToolTip": "server\\Server.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T18:03:09.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "client.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.h",
+              "RelativeDocumentMoniker": "server\\client.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\client.h",
+              "RelativeToolTip": "server\\client.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T18:02:37.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "config.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\config.h",
+              "RelativeDocumentMoniker": "server\\config.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\config.h",
+              "RelativeToolTip": "server\\config.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T18:01:24.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "circular_buffer.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\circular_buffer.h",
+              "RelativeDocumentMoniker": "server\\circular_buffer.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\circular_buffer.h",
+              "RelativeToolTip": "server\\circular_buffer.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T18:00:10.094Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "message.h",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.h",
+              "RelativeDocumentMoniker": "server\\message.h",
+              "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\message.h",
+              "RelativeToolTip": "server\\message.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-25T17:59:22.662Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -28,23 +325,53 @@
               "RelativeDocumentMoniker": "client\\client.cpp",
               "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\client\\client.cpp",
               "RelativeToolTip": "client\\client.cpp",
-              "ViewState": "AQIAADEAAAAAAAAAAAAAAEoAAAAPAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-12-24T11:04:14.489Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-24T11:04:14.489Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "server.cpp",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\server.cpp",
               "RelativeDocumentMoniker": "server\\server.cpp",
               "ToolTip": "C:\\Users\\User\\Desktop\\IKP PROJ\\projekatIKP\\server\\server.cpp",
               "RelativeToolTip": "server\\server.cpp",
-              "ViewState": "AQIAAGkAAAAAAAAAAAAAAIEAAAAMAAAA",
+              "ViewState": "AQIAABsBAAAAAAAAAAAuwEMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-12-24T11:02:50.291Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-24T11:02:50.291Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 398,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1281,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{519e8a32-1c95-4a42-956f-2cee2f28eb0f}"
             }
           ]
         }
