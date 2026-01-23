@@ -104,10 +104,10 @@ struct ClientList {
     }
 
     Client* findByUsername(const char* name) {
-        std::lock_guard<std::mutex> lock(clients_mutex);
         Node* temp = head;
         while (temp) {
-            if (strcmp(temp->data.username, name) == 0) return &temp->data;
+            if (strcmp(temp->data.username, name) == 0)
+                return &temp->data;
             temp = temp->next;
         }
         return nullptr;
