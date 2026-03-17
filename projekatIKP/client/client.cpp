@@ -54,6 +54,9 @@ void recv_thread() {
                 << "\nZa prihvatanje izaberi opciju 6, za odbijanje opciju 7 u meniju."
                 << std::endl;
         }
+        else if (hdr.request_type == 3 && payload == "CONNECT_REJECTED_TIMEOUT") {
+            std::cout << "\n[SERVER] Zahtev za povezivanje je odbijen zbog isteka vremena." << std::endl;
+        }
         else {
             std::cout << "\n[SERVER odgovor] client_id=" << hdr.client_id
                 << " type=" << hdr.request_type

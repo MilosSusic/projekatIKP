@@ -10,12 +10,15 @@
 #include "Message.h"
 #include "Protocol.h"
 #include <mutex>
+#include <vector>
+
 std::mutex clients_mutex;
 
 #pragma comment(lib, "Ws2_32.lib")
 
 
 #pragma pack(push, 1)
+
 
 struct CircularBuffer {
     char data[BUF_SIZE];
@@ -148,6 +151,77 @@ void ClientList::remove(SOCKET sock) {
         temp = temp->next;
     }
 }
+void admin_console() {
+    while (true) {
+        std::cout << "\nAdmin komanda (list/disconnect): ";
+        std::string cmd;
+        std::cin >> cmd;
+
+        if (cmd == "list") {
+            int idx = 1;
+            Node* temp = clients.head;
+            std::vector<std::pair<Client*, Client*>> active;
+            while (temp) {
+                Client& c = temp->data;
+                if (c.connected_to != -1) {
+                    Client* target = clients.findById(c.connected_to);
+                    if (target && target->id > c.id) { // da ne dupliraš parove
+                        std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
+                            << "Klijent " << target->id << " (" << target->username << ")\n";
+                        active.push_back({ &c, target });
+                        idx++;
+                    }
+                }
+                temp = temp->next;
+            }
+            if (active.empty()) {
+                std::cout << "Nema aktivnih komunikacija.\n";
+            }
+        }
+        else if (cmd == "disconnect") {
+            int idx = 1;
+            Node* temp = clients.head;
+            std::vector<std::pair<Client*, Client*>> active;
+            while (temp) {
+                Client& c = temp->data;
+                if (c.connected_to != -1) {
+                    Client* target = clients.findById(c.connected_to);
+                    if (target && target->id > c.id) {
+                        std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
+                            << "Klijent " << target->id << " (" << target->username << ")\n";
+                        active.push_back({ &c, target });
+                        idx++;
+                    }
+                }
+                temp = temp->next;
+            }
+
+            if (active.empty()) {
+                std::cout << "Nema aktivnih komunikacija.\n";
+            }
+            else {
+                std::cout << "Unesi broj komunikacije za prekid: ";
+                int choice;
+                std::cin >> choice;
+                if (choice > 0 && choice <= (int)active.size()) {
+                    Client* a = active[choice - 1].first;
+                    Client* b = active[choice - 1].second;
+                    a->connected_to = -1;
+                    b->connected_to = -1;
+                    send_message(a->sock, a->id, 5, "DISCONNECTED_BY_ADMIN");
+                    send_message(b->sock, b->id, 5, "DISCONNECTED_BY_ADMIN");
+                    std::cout << "Komunikacija prekinuta.\n";
+                }
+            }
+        }
+        else {
+            std::cout << "Nepoznata komanda. Koristi: list, disconnect.\n";
+        }
+    }
+}
+
+
+
 
 void send_message(SOCKET sock, int client_id, int type, const std::string& payload) {
     MessageHeader hdr{ client_id, type, (int)payload.size() };
@@ -211,7 +285,23 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
             std::string("INCOMING_CALL from ") + client.username
         );
 
-        target->pending_requester = client.id;
+        target->pending_requester = client.id; 
+
+        // 🔴 Pokreni timeout proveru u posebnoj niti (15 sekundi)
+        std::thread([&, requester_id = client.id, target_id = target->id]() {
+            std::this_thread::sleep_for(std::chrono::seconds(15));
+            std::lock_guard<std::mutex> lock(clients_mutex);
+
+            Client* t = clients.findById(target_id);
+            Client* r = clients.findById(requester_id);
+
+            // Ako target još nije odgovorio i nije povezan
+            if (t && r && t->pending_requester == requester_id && t->connected_to == -1) {
+                send_message(r->sock, r->id, 3, "CONNECT_REJECTED_TIMEOUT");
+                t->pending_requester = -1;
+            }
+        }).detach();
+
         break;
     }
     case 7: { // CALL_ACCEPTED
@@ -232,6 +322,10 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         break;
     }
     case 4: { // MESSAGE
+        if ((int)payload.size() > BUF_SIZE) {
+            send_message(client.sock, client.id, 4, "MESSAGE_OVERFLOW");
+            break;
+        }
         if (client.connected_to != -1) {
             Client* target = clients.findById(client.connected_to);
             if (target) {
@@ -324,6 +418,7 @@ int main() {
     }
 
     std::cout << "Server pokrenut na portu " << PORT << "\n";
+    std::thread(admin_console).detach();
 
     while (true) {
         SOCKET client_fd = accept(server_fd, nullptr, nullptr);
