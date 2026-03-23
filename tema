@@ -1,0 +1,25 @@
+Mrežni protokol 3
+Potrebno je implementirati protokol koji služi za komunikaciju klijenata preko servera.
+Komunikacija je takva da klijent prvo šalje zahtev za registraciju serveru, ukoliko dostavi sve
+validne informacije može biti registrovan. Nakon uspešne registracije klijent može od servera
+zatražiti listu dostupnih klijenata, i nakon toga poslati serveru zahtev za povezivanje sa nekim od
+dostupnih klijenata. Nakon toga, server prosleđuje poziv drugom klijentu i šalje odgovor prvom.
+Nakon ovoga ova dva klijenta mogu slati poruke jedan drugom sve dok neki od njih ne pošalje
+zahtev za prekid komunikacije. Obratiti pažnju na slučajeve, kada se neki klijent ugasi u toku
+komunikacije, ili šalje poruku a drugi je istovremeno poslao zahtev za prekid npr. ukoliko klijent
+ne prihvati komunikaciju u određenom periodu smatra se da je odbio povezivanje.
+
+Dodati proces koji u bilo kom trenutku može prekinuti komunikaciju dva
+povezana klijenta(koji već šalju poruke jedan drugom).
+Ideja je da se ta dva klijenta povežu i komuniciraju, a dodatni proces
+može da izlista trenutno aktivne komunikacije npr.
+klijent 1 - klijent 2
+klijent 5 - klijent 3
+
+i da pošalje signal serveru da prekine bilo koju od ovih komunikacija.
+Kada se komunikacija prekine potrebno je da i jednom i drugom klijentu
+čija je komunikacija prekinuta stigne poruka da je veza prekinuta od
+strane stranog učesnika. Nakon ovoga bitno je da taj odatni proces, ako
+proba ponovo da prekine istu komunikaciju za to nema opciju pošto je već
+prekinuta(ovo se može postići i time što će uvek birati redni broj
+aktivnih komunikacija, kao što je primer ispisa gore).
