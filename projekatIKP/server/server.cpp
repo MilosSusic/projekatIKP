@@ -18,6 +18,7 @@ std::mutex clients_mutex;
 
 
 #pragma pack(push, 1)
+bool admin_mode = false;
 
 
 struct CircularBuffer {
@@ -130,7 +131,9 @@ void ClientList::remove(SOCKET sock) {
     while (temp) {
         if (temp->data.sock == sock) {
             // Ispis na server konzoli 
-            std::cout << "Klijent " << temp->data.username << " (id=" << temp->data.id << ") se diskonektovao.\n";
+            if(!admin_mode){
+                std::cout << "\nKlijent " << temp->data.username << " (id=" << temp->data.id << ") se diskonektovao.\n";
+			}
             // Obavesti povezanog klijenta, ako postoji veza
             if (temp->data.connected_to != -1) {
                 Client* other = findById(temp->data.connected_to);
@@ -153,74 +156,108 @@ void ClientList::remove(SOCKET sock) {
 }
 void admin_console() {
     while (true) {
-        std::cout << "\nAdmin komanda (list/disconnect): ";
+        if (admin_mode) {
+            std::cout << "\nAdmin komanda (list/disconnect/mode): ";
+        }
+        else {
+            std::cout << "\nUser mode,za prelazak u admin ukucati:mode admin!";
+        }
+
         std::string cmd;
         std::cin >> cmd;
 
-        if (cmd == "list") {
-            int idx = 1;
-            Node* temp = clients.head;
-            std::vector<std::pair<Client*, Client*>> active;
-            while (temp) {
-                Client& c = temp->data;
-                if (c.connected_to != -1) {
-                    Client* target = clients.findById(c.connected_to);
-                    if (target && target->id > c.id) { // da ne dupliraš parove
-                        std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
-                            << "Klijent " << target->id << " (" << target->username << ")\n";
-                        active.push_back({ &c, target });
-                        idx++;
+        if (admin_mode) {
+            if (cmd == "list") {
+                int idx = 1;
+                Node* temp = clients.head;
+                std::vector<std::pair<Client*, Client*>> active;
+                while (temp) {
+                    Client& c = temp->data;
+                    if (c.connected_to != -1) {
+                        Client* target = clients.findById(c.connected_to);
+                        if (target && target->id > c.id) { // da ne dupliraš parove
+                            std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
+                                << "Klijent " << target->id << " (" << target->username << ")\n";
+                            active.push_back({ &c, target });
+                            idx++;
+                        }
                     }
+                    temp = temp->next;
                 }
-                temp = temp->next;
+                if (active.empty()) {
+                    std::cout << "Nema aktivnih komunikacija.\n";
+                }
             }
-            if (active.empty()) {
-                std::cout << "Nema aktivnih komunikacija.\n";
-            }
-        }
-        else if (cmd == "disconnect") {
-            int idx = 1;
-            Node* temp = clients.head;
-            std::vector<std::pair<Client*, Client*>> active;
-            while (temp) {
-                Client& c = temp->data;
-                if (c.connected_to != -1) {
-                    Client* target = clients.findById(c.connected_to);
-                    if (target && target->id > c.id) {
-                        std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
-                            << "Klijent " << target->id << " (" << target->username << ")\n";
-                        active.push_back({ &c, target });
-                        idx++;
+            else if (cmd == "disconnect") {
+                int idx = 1;
+                Node* temp = clients.head;
+                std::vector<std::pair<Client*, Client*>> active;
+                while (temp) {
+                    Client& c = temp->data;
+                    if (c.connected_to != -1) {
+                        Client* target = clients.findById(c.connected_to);
+                        if (target && target->id > c.id) {
+                            std::cout << idx << ". Klijent " << c.id << " (" << c.username << ") - "
+                                << "Klijent " << target->id << " (" << target->username << ")\n";
+                            active.push_back({ &c, target });
+                            idx++;
+                        }
                     }
+                    temp = temp->next;
                 }
-                temp = temp->next;
-            }
 
-            if (active.empty()) {
-                std::cout << "Nema aktivnih komunikacija.\n";
+                if (active.empty()) {
+                    std::cout << "Nema aktivnih komunikacija.\n";
+                }
+                else {
+                    std::cout << "Unesi broj komunikacije za prekid: ";
+                    int choice;
+                    std::cin >> choice;
+                    if (choice > 0 && choice <= (int)active.size()) {
+                        Client* a = active[choice - 1].first;
+                        Client* b = active[choice - 1].second;
+                        a->connected_to = -1;
+                        b->connected_to = -1;
+                        send_message(a->sock, a->id, 5, "DISCONNECTED_BY_ADMIN");
+                        send_message(b->sock, b->id, 5, "DISCONNECTED_BY_ADMIN");
+                        std::cout << "Komunikacija prekinuta.\n";
+                    }
+                }
+            }
+            else if (cmd == "mode") {
+                std::string new_mode;
+                std::cin >> new_mode;
+                if (new_mode == "user") {
+                    admin_mode = false;
+                    std::cout << "\n----------------------------------\n";
+                    std::cout << "Prebacen u USER mod.\n";
+                    std::cout << "Prikazujem logove o klijentima.\n";
+                    std::cout << "Ako zelis da predjes u ADMIN mod, ukucaj: mode admin\n";
+                    std::cout << "\n----------------------------------\n";
+                }
             }
             else {
-                std::cout << "Unesi broj komunikacije za prekid: ";
-                int choice;
-                std::cin >> choice;
-                if (choice > 0 && choice <= (int)active.size()) {
-                    Client* a = active[choice - 1].first;
-                    Client* b = active[choice - 1].second;
-                    a->connected_to = -1;
-                    b->connected_to = -1;
-                    send_message(a->sock, a->id, 5, "DISCONNECTED_BY_ADMIN");
-                    send_message(b->sock, b->id, 5, "DISCONNECTED_BY_ADMIN");
-                    std::cout << "Komunikacija prekinuta.\n";
-                }
+                std::cout << "Nepoznata komanda. Koristi: list, disconnect, mode.\n";
             }
         }
-        else {
-            std::cout << "Nepoznata komanda. Koristi: list, disconnect.\n";
+        else { // user mode
+            if (cmd == "mode") {
+                std::string new_mode;
+                std::cin >> new_mode;
+                if (new_mode == "admin") {
+                    admin_mode = true;
+                    std::cout << "\n----------------------------------\n";
+                    std::cout << "Prebacen u ADMIN mod.\n";
+                    std::cout << "Komande: list, disconnect, mode user\n";
+                    std::cout << "\n----------------------------------\n";
+                }
+            }
+            else {
+                std::cout << "U USER modu imas samo komandu 'mode admin'.\n";
+            }
         }
     }
 }
-
-
 
 
 void send_message(SOCKET sock, int client_id, int type, const std::string& payload) {
@@ -237,7 +274,9 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
     case 1: { // REGISTER
         client.id = next_id++;
         strncpy_s(client.username, sizeof(client.username), payload.c_str(), _TRUNCATE);
-        std::cout << "Registrovan klijent: " << client.username << " id=" << client.id << "\n";
+        if (!admin_mode) {
+            std::cout << "\nRegistrovan klijent: " << client.username << " id=" << client.id << "\n";
+        }
         send_message(client.sock, client.id, 1, "REGISTER_OK");
         break;
     }
@@ -390,6 +429,24 @@ int main() {
         std::cerr << "WSAStartup failed\n";
         return 1;
     }
+    std::cout << "Pokreni server kao (admin/user): ";
+    std::string mode;
+    std::cin >> mode;
+    if (mode == "admin") {
+        admin_mode = true;
+        std::cout << "\n----------------------------------\n";
+        std::cout << "Server radi u ADMIN modu.\n";
+        std::cout << "Komande: list, disconnect, mode user\n";
+        std::cout << "\n----------------------------------\n";
+    }
+    else {
+        admin_mode = false;
+        std::cout << "\n----------------------------------\n";
+        std::cout << "Server radi u USER modu.\n";
+        std::cout << "Prikazujem logove o klijentima.\n";
+        std::cout << "\n----------------------------------\n";
+    }
+
 
     SOCKET server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == INVALID_SOCKET) {
@@ -418,8 +475,7 @@ int main() {
     }
 
     std::cout << "Server pokrenut na portu " << PORT << "\n";
-    std::thread(admin_console).detach();
-
+        std::thread(admin_console).detach();
     while (true) {
         SOCKET client_fd = accept(server_fd, nullptr, nullptr);
         if (client_fd == INVALID_SOCKET) {
