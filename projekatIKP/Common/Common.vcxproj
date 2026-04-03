@@ -23,6 +23,9 @@
     <ClInclude Include="NetConstants.h" />
     <ClInclude Include="Protocol.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CheckSum.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

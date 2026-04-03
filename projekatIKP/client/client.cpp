@@ -5,9 +5,9 @@
 #include <thread>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include "Protocol.h"
 #include "NetConstants.h"
 #include "Message.h"
+#include "CheckSum.cpp"
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -15,6 +15,9 @@
 
 SOCKET sock;
 int my_id = 0;
+ChecksumType currentChecksumType = ChecksumType::NONE;
+ChecksumType peerChecksumType = ChecksumType::NONE;
+
 
 void print_menu() {
     std::cout << "\n=== Meni ===\n";
@@ -25,11 +28,84 @@ void print_menu() {
     std::cout << "5. Disconnect\n";
     std::cout << "6. Accept call\n";
     std::cout << "7. Reject call\n";
-    std::cout << "Izbor: ";
+    std::cout << "Enter choice: ";
+}
+
+ChecksumType chose_sumtype() {
+    int choice = -1;
+    do {
+        std::cout << "\n=== Choose algorithm for calculating checksum ===\n";
+        std::cout << "0. None (no checksum)\n";
+        std::cout << "1. Simple SUM (byte sum)\n";
+        std::cout << "2. CRC32 (Cyclic Redundancy Check)\n";
+        std::cout << "3. SHA-256 (Secure Hash Algorithm)\n";
+        std::cout << "Enter choice: ";
+        std::cin >> choice;
+
+        if (choice < 0 || choice > 3) {
+            std::cout << "\n U must enter correct number!!!\n";
+        }
+    } while (choice < 0 || choice > 3);
+
+    return static_cast<ChecksumType>(choice);
+}
+
+std::string checksumTypeToString(ChecksumType type) {
+    switch (type) {
+    case ChecksumType::NONE:
+        return "None";
+    case ChecksumType::SUM:
+        return "Simple SUM";
+    case ChecksumType::CRC32:
+        return "CRC32";
+    case ChecksumType::SHA256:
+        return "SHA-256";
+    default:
+        return "Unknown";
+    }
 }
 
 void send_request(int type, const std::string& payload) {
-    MessageHeader hdr{ my_id, type, (int)payload.size() };
+    ChecksumType checkTp = currentChecksumType;
+    int sum = 0;
+    switch (type) {
+    case 1:
+        checkTp = ChecksumType::NONE;
+        sum = 0;
+        break;
+    case 2:
+        checkTp = ChecksumType::NONE;
+        sum = 0;
+        break;
+    case 3:
+        currentChecksumType = chose_sumtype();
+        checkTp = currentChecksumType;
+        sum = calculateChecksum(payload, checkTp);
+        break;
+    case 4:
+        checkTp = currentChecksumType;
+        sum = calculateChecksum(payload, checkTp);
+        break;
+    case 5:
+        currentChecksumType = ChecksumType::NONE;
+        checkTp = currentChecksumType;
+        break;
+    case 7:
+        currentChecksumType = peerChecksumType;
+        checkTp = currentChecksumType;
+        sum = calculateChecksum(payload, checkTp);
+        break;
+    case 8:
+        peerChecksumType = ChecksumType::NONE;
+        currentChecksumType = peerChecksumType;
+        checkTp = currentChecksumType;
+        sum = 0;
+        break;
+    default:
+        std::cout << "Nepoznata opcija." << std::endl;
+    }
+
+    MessageHeader hdr{ my_id, type, (int)payload.size() ,checkTp,sum };
     send(sock, (char*)&hdr, sizeof(hdr), 0);
     if (hdr.payload_len > 0) send(sock, payload.c_str(), hdr.payload_len, 0);
 }
@@ -50,7 +126,9 @@ void recv_thread() {
         }
 
         if (hdr.request_type == 6) { // INCOMING_CALL
+            peerChecksumType = hdr.type;
             std::cout << "\nPoziv od klijenta: " << payload
+                << "\nChecksum ce se izvrsavati algoritmom: " << checksumTypeToString(hdr.type)
                 << "\nZa prihvatanje izaberi opciju 6, za odbijanje opciju 7 u meniju."
                 << std::endl;
         }
@@ -105,7 +183,7 @@ void menu() {
             break;
         case 5: // DISCONNECT
             send_request(5, "");
-            return;
+            break;
         case 6: // ACCEPT CALL
             send_request(7, ""); // CALL_ACCEPTED
             break;

@@ -8,7 +8,7 @@
 #include <sstream>
 #include "NetConstants.h"
 #include "Message.h"
-#include "Protocol.h"
+#include "CheckSum.cpp"
 #include <mutex>
 std::mutex clients_mutex;
 
@@ -16,7 +16,8 @@ std::mutex clients_mutex;
 
 
 #pragma pack(push, 1)
-
+const int CONNECT_TIMEOUT_MS = 20000;
+int brojac_poruka = 0;
 struct CircularBuffer {
     char data[BUF_SIZE];
     int head = 0;
@@ -69,6 +70,7 @@ struct Client {
     int pending_requester = -1;
     CircularBuffer buffer;
     bool active = true;
+    ChecksumType checksumType = ChecksumType::NONE;
 };
 
 struct Node {
@@ -118,7 +120,22 @@ ClientList clients;
 int next_id = 1;
 
 // Forward deklaracija
-void send_message(SOCKET sock, int client_id, int type, const std::string& payload);
+void send_message(SOCKET sock, int client_id, int type, ChecksumType check_type, int checksum, const std::string& payload);
+
+std::string checksumTypeToString(ChecksumType type) {
+    switch (type) {
+    case ChecksumType::NONE:
+        return "None";
+    case ChecksumType::SUM:
+        return "Simple SUM";
+    case ChecksumType::CRC32:
+        return "CRC32";
+    case ChecksumType::SHA256:
+        return "SHA-256";
+    default:
+        return "Unknown";
+    }
+}
 
 void ClientList::remove(SOCKET sock) {
     std::lock_guard<std::mutex> lock(clients_mutex);
@@ -133,12 +150,13 @@ void ClientList::remove(SOCKET sock) {
                 Client* other = findById(temp->data.connected_to);
                 if (other) {
                     other->connected_to = -1;
-                    send_message(other->sock, other->id, 5,
+                    send_message(other->sock, other->id, 5, other->checksumType, 0,
                         std::string("Prekinuta je komunikacija sa klijentom ") + temp->data.username);
                 }
             }
             closesocket(temp->data.sock);
-            // Ukloni ?vor iz liste
+            
+
             if (prev) prev->next = temp->next;
             else head = temp->next;
             delete temp;
@@ -149,8 +167,8 @@ void ClientList::remove(SOCKET sock) {
     }
 }
 
-void send_message(SOCKET sock, int client_id, int type, const std::string& payload) {
-    MessageHeader hdr{ client_id, type, (int)payload.size() };
+void send_message(SOCKET sock, int client_id, int type, ChecksumType check_type, int checksum, const std::string& payload) {
+    MessageHeader hdr{ client_id, type, (int)payload.size(),check_type,checksum};
     send(sock, (char*)&hdr, sizeof(hdr), 0);
     if (hdr.payload_len > 0) {
         send(sock, payload.c_str(), hdr.payload_len, 0);
@@ -164,7 +182,7 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         client.id = next_id++;
         strncpy_s(client.username, sizeof(client.username), payload.c_str(), _TRUNCATE);
         std::cout << "Registrovan klijent: " << client.username << " id=" << client.id << "\n";
-        send_message(client.sock, client.id, 1, "REGISTER_OK");
+        send_message(client.sock, client.id, 1, client.checksumType, 0, "REGISTER_OK");
         break;
     }
     case 2: { // LIST
@@ -174,44 +192,49 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
             list += "client_id=" + std::to_string(temp->data.id) + " username=" + temp->data.username + "\n";
             temp = temp->next;
         }
-        send_message(client.sock, client.id, 2, list);
+        send_message(client.sock, client.id, 2, client.checksumType, 0, list);
         break;
     }
     case 3: { // CONNECT_REQUEST
         Client* target = clients.findByUsername(payload.c_str());
 
         if (!target) {
-            send_message(client.sock, client.id, 3, "CONNECT_FAILED: USER_NOT_FOUND");
+            send_message(client.sock, client.id, 3, client.checksumType, 0, "CONNECT_FAILED: USER_NOT_FOUND");
             break;
         }
-
-        // 🔴 NE MOŽE SAM SEBE
         if (target->id == client.id) {
-            send_message(client.sock, client.id, 3, "CONNECT_FAILED: CANNOT_CONNECT_TO_SELF");
+            send_message(client.sock, client.id, 3, client.checksumType, 0, "CONNECT_FAILED: CANNOT_CONNECT_TO_SELF");
             break;
         }
-
-        // 🔴 AKO JE VEĆ POVEZAN
         if (client.connected_to != -1) {
-            send_message(client.sock, client.id, 3, "CONNECT_FAILED: ALREADY_CONNECTED");
+            send_message(client.sock, client.id, 3, client.checksumType, 0, "CONNECT_FAILED: ALREADY_CONNECTED");
             break;
         }
-
-        // 🔴 AKO JE TARGET VEĆ POVEZAN
         if (target->connected_to != -1) {
-            send_message(client.sock, client.id, 3, "CONNECT_FAILED: TARGET_BUSY");
+            send_message(client.sock, client.id, 3, client.checksumType, 0, "CONNECT_FAILED: TARGET_BUSY");
             break;
         }
 
-        // ✅ SVE OK – POŠALJI POZIV
-        send_message(
-            target->sock,
-            target->id,
-            6,
-            std::string("INCOMING_CALL from ") + client.username
-        );
+        client.checksumType = hdr.type; // zapamti algoritam koji je klijent poslao
+
+        send_message(target->sock, target->id, 6, client.checksumType, 0,
+            std::string("INCOMING_CALL from ") + client.username);
 
         target->pending_requester = client.id;
+
+        std::thread([&, requester_id = client.id, target_id = target->id]() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(CONNECT_TIMEOUT_MS));
+            std::lock_guard<std::mutex> lock(clients_mutex);
+            Client* requester = clients.findById(requester_id);
+            Client* targetClient = clients.findById(target_id);
+            if (requester && targetClient && requester->connected_to == -1 && targetClient->pending_requester == requester_id) {
+                targetClient->pending_requester = -1;
+                requester->checksumType = ChecksumType::NONE;
+
+                send_message(requester->sock, requester->id, 3, requester->checksumType, 0, "CONNECT_FAILED: TIMEOUT");
+                send_message(targetClient->sock, targetClient->id, 3, targetClient->checksumType, 0, "CONNECT_FAILED: TIMEOUT");
+            }
+            }).detach();
         break;
     }
     case 7: { // CALL_ACCEPTED
@@ -219,15 +242,29 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         if (requester) {
             requester->connected_to = client.id;
             client.connected_to = requester->id;
-            send_message(requester->sock, requester->id, 3, std::string("CONNECTED to ") + client.username);
-            send_message(client.sock, client.id, 3, std::string("CONNECTED to ") + requester->username);
+            client.checksumType = hdr.type;
+        
+            std::string tip = checksumTypeToString(client.checksumType);
+            std::string poruka_tip = "\nKomunikacija ce koristiti " + tip + " checksum algoritam.";
+
+            send_message(requester->sock, requester->id, 3, client.checksumType, 0,
+                std::string("CONNECTED to ") + client.username + poruka_tip);
+            send_message(client.sock, client.id, 3, client.checksumType, 0,
+                std::string("CONNECTED to ") + requester->username + poruka_tip);
         }
         break;
     }
     case 8: { // CALL_REJECTED
         Client* requester = clients.findById(client.pending_requester);
         if (requester) {
-            send_message(requester->sock, requester->id, 3, "CONNECT_REJECTED");
+            client.checksumType = ChecksumType::NONE;
+            requester->checksumType = ChecksumType::NONE;
+            requester->pending_requester = -1;
+            client.pending_requester = -1;
+
+            // Obavesti oba klijenta
+            send_message(requester->sock, requester->id, 3, client.checksumType, 0, "CONNECT_REJECTED");
+            send_message(client.sock, client.id, 3, client.checksumType, 0, "CONNECT_REJECTED");
         }
         break;
     }
@@ -235,7 +272,13 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
         if (client.connected_to != -1) {
             Client* target = clients.findById(client.connected_to);
             if (target) {
-                send_message(target->sock, client.id, 4, payload);
+                if (payload.size() > MAX_PAYLOAD_SIZE) {
+                    send_message(client.sock, client.id, 3, client.checksumType, 0, "ERR_PAYLOAD_TOO_LARGE");
+                    break;  
+                }
+                else {
+                    send_message(target->sock, client.id, 4, client.checksumType, 0, payload);
+                }
             }
         }
         break;
@@ -245,18 +288,21 @@ void handle_request(Client& client, const MessageHeader& hdr, const std::string&
             Client* other = clients.findById(client.connected_to);
             if (other) {
                 other->connected_to = -1;
-                send_message(other->sock, other->id, 5,
+                other->checksumType = ChecksumType::NONE;
+                send_message(other->sock, other->id, 5, client.checksumType, 0,
                     std::string("Prekinuta je komunikacija sa klijentom ") + client.username);
             }
         }
         client.connected_to = -1;
-        send_message(client.sock, client.id, 5, "DISCONNECTED");
+        client.checksumType = ChecksumType::NONE;
+        send_message(client.sock, client.id, 5, client.checksumType, 0, "DISCONNECTED");
         break;
     }
     default:
-        send_message(client.sock, client.id, 0, "UNKNOWN_REQUEST");
+        send_message(client.sock, client.id, 0, client.checksumType, 0, "UNKNOWN_REQUEST");
     }
 }
+
 
 void client_handler(Client& client) {
     char recvbuf[512];
@@ -283,6 +329,22 @@ void client_handler(Client& client) {
             std::string payload(hdr.payload_len, '\0');
             if (hdr.payload_len > 0) {
                 client.buffer.pop(&payload[0], hdr.payload_len);
+            }
+            int expected = calculateChecksum(payload, hdr.type);
+            if (hdr.request_type == 4) { // Za MESSAGE poruke ispisujemo detalje o checksum-u
+                std::cout << "Poruka broj :" << ++brojac_poruka
+                    << "\nPrimljen zahtev od klijenta " << client.id
+                    << " \ntip=" << hdr.request_type
+                    << " \npayload_len=" << hdr.payload_len
+                    << " \nchecksum_type=" << checksumTypeToString(hdr.type)
+                    << " \nexpected_checksum=" << expected
+                    << " \nreceived_checksum=" << hdr.checksum
+                    << "\n";
+            }
+            if (hdr.checksum != expected) {
+                std::cout << "Checksum mismatch for client " << client.id << "\n";
+                send_message(client.sock, client.id, 0, hdr.type, 0, "CHECKSUM_ERROR");
+                continue; 
             }
 
             handle_request(client, hdr, payload);
