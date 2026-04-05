@@ -36,10 +36,10 @@ ChecksumType chose_sumtype() {
     do {
         std::cout << "\n=== Choose algorithm for calculating checksum ===\n";
         std::cout << "0. None (no checksum)\n";
-        std::cout << "1. Simple SUM (byte sum)\n";
-        std::cout << "2. CRC32 (Cyclic Redundancy Check)\n";
-        std::cout << "3. SHA-256 (Secure Hash Algorithm)\n";
-        std::cout << "Enter choice: ";
+        std::cout << "\033[34m1. Simple SUM (byte sum)\n";
+        std::cout << "\033[32m2. CRC32 (Cyclic Redundancy Check)\n";
+        std::cout << "\033[31m3. SHA-256 (Secure Hash Algorithm)\n";
+        std::cout << "\033[0mEnter choice: ";
         std::cin >> choice;
 
         if (choice < 0 || choice > 3) {
